@@ -1,0 +1,167 @@
+
+    <html lang="en" class="simpread-font simpread-theme-root" style="false">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="author" content="Kenshin"/>
+        <meta name="description" content="简悦 ( SimpRead ) - 让你瞬间进入沉浸式阅读的 Chrome extension" />
+        <meta name="keywords" content="Chrome extension, Chrome 扩展, 阅读模式, 沉浸式阅读, read mode, reading mode, reader view"/>
+        <meta name="thumbnail" content="https://simpread-1254315611.cos.ap-shanghai.myqcloud.com/static/introduce-2.png"/>
+
+        <link rel="stylesheet" href="http://sr.ksria.cn/puread/simpread.css"                  type="text/css" media="all">
+        <link rel="stylesheet" href="http://sr.ksria.cn/puread/theme_common.css"              type="text/css" media="all">
+        <link rel="stylesheet" href="http://sr.ksria.cn/puread/theme_github.css" type="text/css" media="all">
+
+        <style type="text/css" id="simpread-custom-art">sr-rd-content *, sr-rd-content p, sr-rd-content div {}</style><style type="text/css" id="simpread-custom-code">sr-rd-content pre code, sr-rd-content pre code * {}</style><style type="text/css" id="simpread-custom-desc">sr-rd-desc {}</style><style type="text/css" id="simpread-custom-pre">sr-rd-content pre {}</style><style type="text/css" id="simpread-custom-title">sr-rd-title {}</style><style type="text/css" id="simpread-custom-css"></style><style type="text/css" id="simpread-custom-art">sr-rd-content *, sr-rd-content p, sr-rd-content div {}</style><style type="text/css" id="simpread-custom-code">sr-rd-content pre code, sr-rd-content pre code * {}</style><style type="text/css" id="simpread-custom-desc">sr-rd-desc {}</style><style type="text/css" id="simpread-custom-pre">sr-rd-content pre {}</style><style type="text/css" id="simpread-custom-title">sr-rd-title {}</style><style type="text/css" id="simpread-custom-css"></style><style type="text/css" id="simpread-custom-art">sr-rd-content *, sr-rd-content p, sr-rd-content div {}</style><style type="text/css" id="simpread-custom-code">sr-rd-content pre code, sr-rd-content pre code * {}</style><style type="text/css" id="simpread-custom-desc">sr-rd-desc {}</style><style type="text/css" id="simpread-custom-pre">sr-rd-content pre {}</style><style type="text/css" id="simpread-custom-title">sr-rd-title {}</style><style type="text/css" id="simpread-custom-css"></style><style type="text/css" id="simpread-custom-art">sr-rd-content *, sr-rd-content p, sr-rd-content div {}</style><style type="text/css" id="simpread-custom-code">sr-rd-content pre code, sr-rd-content pre code * {}</style><style type="text/css" id="simpread-custom-desc">sr-rd-desc {}</style><style type="text/css" id="simpread-custom-pre">sr-rd-content pre {}</style><style type="text/css" id="simpread-custom-title">sr-rd-title {}</style><style type="text/css" id="simpread-custom-css"></style><style type="text/css" id="simpread-custom-art">sr-rd-content *, sr-rd-content p, sr-rd-content div {}</style><style type="text/css" id="simpread-custom-code">sr-rd-content pre code, sr-rd-content pre code * {}</style><style type="text/css" id="simpread-custom-desc">sr-rd-desc {}</style><style type="text/css" id="simpread-custom-pre">sr-rd-content pre {}</style><style type="text/css" id="simpread-custom-title">sr-rd-title {}</style><style type="text/css" id="simpread-custom-css"></style><style type="text/css" id="simpread-custom-art">sr-rd-content *, sr-rd-content p, sr-rd-content div {}</style><style type="text/css" id="simpread-custom-code">sr-rd-content pre code, sr-rd-content pre code * {}</style><style type="text/css" id="simpread-custom-desc">sr-rd-desc {}</style><style type="text/css" id="simpread-custom-pre">sr-rd-content pre {}</style><style type="text/css" id="simpread-custom-title">sr-rd-title {}</style><style type="text/css" id="simpread-custom-css"></style>
+        <title>简悦 | 二、八、十、十六进制转换（图解篇）</title>
+        
+    </head>
+    <body>
+        <sr-read style="0">
+            <sr-rd-title>二、八、十、十六进制转换（图解篇）</sr-rd-title>
+            <sr-rd-desc style="display: none;"></sr-rd-desc>
+            <sr-rd-content><h1 id="sr-toc-0"><strong><a name="_labelContents"></a>一. 本文所涉及的内容（Contents）</strong></h1><ol>
+<li><a href="#_labelContents">本文所涉及的内容（Contents）</a></li>
+<li><a href="#_labelContexts">背景（Contexts）</a></li>
+<li><a href="#_labelConvert">进制转换算法（Convert）</a></li>
+<ol>
+<li><a href="#_labelConvert10">（二、八、十六进制） → （十进制）</a><ol>
+<li><a href="#_labelConvert11">二进制 → 十进制 </a></li>
+<li><a href="#_labelConvert12">八进制 → 十进制</a></li>
+<li><a href="#_labelConvert13">十六进制 → 十进制</a></li>
+</ol></li>
+<li><a href="#_labelConvert20">（十进制） → （二、八、十六进制）</a><ol>
+<li><a href="#_labelConvert21">十进制 → 二进制 </a></li>
+<li><a href="#_labelConvert22">十进制 → 八进制</a></li>
+<li><a href="#_labelConvert23">十进制 → 十六进制</a></li>
+</ol></li>
+<li><a href="#_labelConvert30">（二进制） ↔ （八、十六进制）</a><ol>
+<li><a href="#_labelConvert31">二进制 → 八进制 </a></li>
+<li><a href="#_labelConvert32">八进制 → 二进制</a></li>
+<li><a href="#_labelConvert33">二进制 → 十六进制</a></li>
+<li><a href="#_labelConvert34">十六进制 → 二进制</a></li>
+</ol></li>
+<li><a href="#_labelConvert40">（八进制） ↔ （十六进制）</a><ol>
+<li><a href="#_labelConvert41">八进制 → 十六进制 </a></li>
+<li><a href="#_labelConvert42">十六进制 → 八进制</a></li>
+</ol></li>
+</ol>
+<li><a href="#_labelExtension">扩展阅读</a></li>
+<li><a href="#_labelReferences">参考文献（References）</a></li>
+</ol><h1 id="sr-toc-1"><strong><a name="_labelContexts"></a>二. 背景（Contexts）</strong></h1><p>　　之前使用 SQL 把十进制的整数转换为三十六进制，SQL 代码请参考：<a href="http://www.cnblogs.com/gaizai/p/4001016.html">SQL Server 进制转换函数</a>，其实它是基于二、八、十、十六进制转换的计算公式的，进制之间的转换是很基础的知识，但是我发现网络上没有一篇能把它说的清晰、简单、易懂的文章，所以我才写这篇文章的念头，希望能让你再也不用担心、害怕进制之间的转换了。</p><p>　　下面是二、八、十、十六进制之间关系的结构图：</p><p><a href="https://images0.cnblogs.com/blog/48305/201501/191445546889356.png"><div class="sr-rd-content-center"><img class="" src="https://images0.cnblogs.com/blog/48305/201501/191445561883615.png"></div></a></p><p>（Figure1：进制关系结构图）</p><p>下文会分 4 个部分对这个图进行分解，针对每个部分会以图文的形式进行讲解：</p><ol>
+<li>（二、八、十六进制） → （十进制）；</li>
+<li>（十进制） → （二、八、十六进制）；</li>
+<li>（二进制） ↔ （八、十六进制）；</li>
+<li>（八进制） ↔ （十六进制）；</li>
+</ol><h1 id="sr-toc-2"><strong><a name="_labelConvert"></a>三. 进制转换算法（Convert）</strong></h1><p>　　在数字后面加上不同的字母来表示不同的进位制。B（Binary) 表示二进制，O（Octal）表示八进制，D（Decimal）或不加表示十进制，H（Hexadecimal）表示十六进制。例如：(101011)B=(53)O=(43)D=(2B)H</p><h2 id="sr-toc-3"><strong><a name="_labelConvert10"></a>(一) （二、八、十六进制） → （十进制）</strong></h2><p><a href="https://images0.cnblogs.com/blog/48305/201501/191445576568629.png"><div class="sr-rd-content-center"><img class="" src="https://images0.cnblogs.com/blog/48305/201501/191445586883045.png"></div></a></p><p>（Figure2：其他进制转换为十进制）</p><ul>
+<li><strong><a name="_labelConvert11"></a>二进制 → 十进制</strong></li>
+</ul><p>　　方法：二进制数从低位到高位（即从右往左）计算，第 0 位的权值是 2 的 0 次方，第 1 位的权值是 2 的 1 次方，第 2 位的权值是 2 的 2 次方，依次递增下去，把最后的结果相加的值就是十进制的值了。</p><p>　　例：将二进制的 (101011)B 转换为十进制的步骤如下：</p><p>1. 第 0 位 1 x 2^0 = 1；</p><p>2. 第 1 位 1 x 2^1 = 2；</p><p>3. 第 2 位 0 x 2^2 = 0；</p><p>4. 第 3 位 1 x 2^3 = 8；</p><p>5. 第 4 位 0 x 2^4 = 0；</p><p>6. 第 5 位 1 x 2^5 = 32；</p><p>7. 读数，把结果值相加，1+2+0+8+0+32=43，即 (101011)B=(43)D。</p><ul>
+<li><strong><a name="_labelConvert12"></a>八进制 → 十进制</strong></li>
+</ul><p>　　方法：八进制数从低位到高位（即从右往左）计算，第 0 位的权值是 8 的 0 次方，第 1 位的权值是 8 的 1 次方，第 2 位的权值是 8 的 2 次方，依次递增下去，把最后的结果相加的值就是十进制的值了。</p><p>　　八进制就是逢 8 进 1，八进制数采用 0～7 这八数来表达一个数。</p><p>　　例：将八进制的 (53)O 转换为十进制的步骤如下：</p><p>1. 第 0 位 3 x 8^0 = 3；</p><p>2. 第 1 位 5 x 8^1 = 40；</p><p>3. 读数，把结果值相加，3+40=43，即 (53)O=(43)D。</p><ul>
+<li><strong><a name="_labelConvert13"></a>十六进制 → 十进制</strong></li>
+</ul><p>　　方法：十六进制数从低位到高位（即从右往左）计算，第 0 位的权值是 16 的 0 次方，第 1 位的权值是 16 的 1 次方，第 2 位的权值是 16 的 2 次方，依次递增下去，把最后的结果相加的值就是十进制的值了。</p><p>　　十六进制就是逢 16 进 1，十六进制的 16 个数为 0123456789ABCDEF。</p><p>　　例：将十六进制的 (2B)H 转换为十进制的步骤如下：</p><p>1. 第 0 位 B x 16^0 = 11；</p><p>2. 第 1 位 2 x 16^1 = 32；</p><p>3. 读数，把结果值相加，11+32=43，即 (2B)H=(43)D。</p><h2 id="sr-toc-4"><strong><a name="_labelConvert20"></a>(二) （十进制） → （二、八、十六进制）</strong></h2><p><a href="https://images0.cnblogs.com/blog/48305/201501/191445595475175.png"><div class="sr-rd-content-center"><img class="" src="https://images0.cnblogs.com/blog/48305/201501/191446004698089.png"></div></a></p><p>（Figure3：十进制转换为其它进制）</p><ul>
+<li><strong><a name="_labelConvert21"></a>十进制 → 二进制</strong></li>
+</ul><p>　　方法：除 2 取余法，即每次将整数部分除以 2，余数为该位权上的数，而商继续除以 2，余数又为上一个位权上的数，这个步骤一直持续下去，直到商为 0 为止，最后读数时候，从最后一个余数读起，一直到最前面的一个余数。&nbsp;</p><p>　　例：将十进制的 (43)D 转换为二进制的步骤如下：</p><p>1. 将商 43 除以 2，商 21 余数为 1；</p><p>2. 将商 21 除以 2，商 10 余数为 1；</p><p>3. 将商 10 除以 2，商 5 余数为 0；</p><p>4. 将商 5 除以 2，商 2 余数为 1；</p><p>5. 将商 2 除以 2，商 1 余数为 0；&nbsp;</p><p>6. 将商 1 除以 2，商 0 余数为 1；&nbsp;</p><p>7. 读数，因为最后一位是经过多次除以 2 才得到的，因此它是最高位，读数字从最后的余数向前读，101011，即 (43)D=(101011)B。</p><p><a href="https://images0.cnblogs.com/blog/48305/201501/191446012199718.png"><div class="sr-rd-content-center"><img class="" src="https://images0.cnblogs.com/blog/48305/201501/191446019539875.png"></div></a></p><p>（Figure4：图解十进制 → 二进制）</p><ul>
+<li><strong><a name="_labelConvert22"></a>十进制 → 八进制</strong></li>
+</ul><p>　　方法 1：除 8 取余法，即每次将整数部分除以 8，余数为该位权上的数，而商继续除以 8，余数又为上一个位权上的数，这个步骤一直持续下去，直到商为 0 为止，最后读数时候，从最后一个余数起，一直到最前面的一个余数。</p><p>　　例：将十进制的 (796)D 转换为八进制的步骤如下：</p><p>1. 将商 796 除以 8，商 99 余数为 4；</p><p>2. 将商 99 除以 8，商 12 余数为 3；</p><p>3. 将商 12 除以 8，商 1 余数为 4；</p><p>4. 将商 1 除以 8，商 0 余数为 1；</p><p>5. 读数，因为最后一位是经过多次除以 8 才得到的，因此它是最高位，读数字从最后的余数向前读，1434，即 (796)D=(1434)O。</p><p><a href="https://images0.cnblogs.com/blog/48305/201501/191446027976234.png"><div class="sr-rd-content-center"><img class="" src="https://images0.cnblogs.com/blog/48305/201501/191446033751877.png"></div></a></p><p>（Figure5：图解十进制 → 八进制）</p><p>　　方法 2：使用间接法，先将十进制转换成二进制，然后将二进制又转换成八进制；</p><p><a href="https://images0.cnblogs.com/blog/48305/201501/191446044383535.png"><div class="sr-rd-content-center"><img class="" src="https://images0.cnblogs.com/blog/48305/201501/191446059386793.png" height="620" style="width: auto;"></div></a></p><p>（Figure6：图解十进制 → 八进制）</p><ul>
+<li><strong><a name="_labelConvert23"></a>十进制 → 十六进制</strong></li>
+</ul><p>　　方法 1：除 16 取余法，即每次将整数部分除以 16，余数为该位权上的数，而商继续除以 16，余数又为上一个位权上的数，这个步骤一直持续下去，直到商为 0 为止，最后读数时候，从最后一个余数起，一直到最前面的一个余数。</p><p>　　例：将十进制的 (796)D 转换为十六进制的步骤如下：</p><p>1. 将商 796 除以 16，商 49 余数为 12，对应十六进制的 C；</p><p>2. 将商 49 除以 16，商 3 余数为 1；</p><p>3. 将商 3 除以 16，商 0 余数为 3；</p><p>4. 读数，因为最后一位是经过多次除以 16 才得到的，因此它是最高位，读数字从最后的余数向前读，31C，即 (796)D=(31C)H。</p><p><a href="https://images0.cnblogs.com/blog/48305/201501/191446073607794.png"><div class="sr-rd-content-center"><img class="" src="https://images0.cnblogs.com/blog/48305/201501/191446083759737.png"></div></a></p><p>（Figure7：图解十进制 → 十六进制）</p><p>　　方法 2：使用间接法，先将十进制转换成二进制，然后将二进制又转换成十六进制；</p><p><a href="https://images0.cnblogs.com/blog/48305/201501/191446096567695.png"><div class="sr-rd-content-center"><img class="" src="https://images0.cnblogs.com/blog/48305/201501/191446107502896.png" height="620" style="width: auto;"></div></a></p><p>（Figure8：图解十进制 → 十六进制）</p><h2 id="sr-toc-5"><strong><a name="_labelConvert30"></a>(三) （二进制） ↔ （八、十六进制）</strong></h2><p><a href="https://images0.cnblogs.com/blog/48305/201501/191446117669540.png"><div class="sr-rd-content-center"><img class="" src="https://images0.cnblogs.com/blog/48305/201501/191446126101198.png"></div></a></p><p>（Figure9：二进制转换为其它进制）</p><ul>
+<li><strong><a name="_labelConvert31"></a>二进制 → 八进制</strong></li>
+</ul><p>　　方法：取三合一法，即从二进制的小数点为分界点，向左（向右）每三位取成一位，接着将这三位二进制按权相加，然后，按顺序进行排列，小数点的位置不变，得到的数字就是我们所求的八进制数。如果向左（向右）取三位后，取到最高（最低）位时候，如果无法凑足三位，可以在小数点最左边（最右边），即整数的最高位（最低位）添 0，凑足三位。</p><p>　　例：将二进制的 (11010111.0100111)B 转换为八进制的步骤如下：</p><p>1. 小数点前 111 = 7；</p><p>2. 010 = 2；</p><p>3. 11 补全为 011，011 = 3；</p><p>4. 小数点后 010 = 2；</p><p>5. 011 = 3；</p><p>6. 1 补全为 100，100 = 4；</p><p>7. 读数，读数从高位到低位，即 (11010111.0100111)B=(327.234)O。</p><p><a href="https://images0.cnblogs.com/blog/48305/201501/191446138756684.png"><div class="sr-rd-content-center"><img class="" src="https://images0.cnblogs.com/blog/48305/201501/191446144855271.png"></div></a></p><p>（Figure10：图解二进制 → 八进制）</p><p>二进制与八进制编码对应表：</p><table>
+<tbody>
+<tr>
+<td valign="top" width="284">
+<p>二进制</p>
+</td>
+<td valign="top" width="284">
+<p>八进制</p>
+</td>
+</tr>
+<tr>
+<td valign="top" width="284">
+<p>000</p>
+</td>
+<td valign="top" width="284">
+<p>0</p>
+</td>
+</tr>
+<tr>
+<td valign="top" width="284">
+<p>001</p>
+</td>
+<td valign="top" width="284">
+<p>1</p>
+</td>
+</tr>
+<tr>
+<td valign="top" width="284">
+<p>010</p>
+</td>
+<td valign="top" width="284">
+<p>2</p>
+</td>
+</tr>
+<tr>
+<td valign="top" width="284">
+<p>011</p>
+</td>
+<td valign="top" width="284">
+<p>3</p>
+</td>
+</tr>
+<tr>
+<td valign="top" width="284">
+<p>100</p>
+</td>
+<td valign="top" width="284">
+<p>4</p>
+</td>
+</tr>
+<tr>
+<td valign="top" width="284">
+<p>101</p>
+</td>
+<td valign="top" width="284">
+<p>5</p>
+</td>
+</tr>
+<tr>
+<td valign="top" width="284">
+<p>110</p>
+</td>
+<td valign="top" width="284">
+<p>6</p>
+</td>
+</tr>
+<tr>
+<td valign="top" width="284">
+<p>111</p>
+</td>
+<td valign="top" width="284">
+<p>7</p>
+</td>
+</tr>
+</tbody>
+</table><ul>
+<li><strong><a name="_labelConvert32"></a>八进制 → 二进制</strong></li>
+</ul><p>　　方法：取一分三法，即将一位八进制数分解成三位二进制数，用三位二进制按权相加去凑这位八进制数，小数点位置照旧。</p><p>　　例：将八进制的 (327)O 转换为二进制的步骤如下：</p><p>1. 3 = 011；</p><p>2. 2 = 010；</p><p>3. 7 = 111；</p><p>4. 读数，读数从高位到低位，011010111，即 (327)O=(11010111)B。</p><p><a href="https://images0.cnblogs.com/blog/48305/201501/191446152665143.png"><div class="sr-rd-content-center-small"><img class="" src="https://images0.cnblogs.com/blog/48305/201501/191446161888058.png"></div></a></p><p>（Figure11：图解八进制 → 二进制）</p><ul>
+<li><strong><a name="_labelConvert33"></a>二进制 → 十六进制</strong></li>
+</ul><p>　　方法：取四合一法，即从二进制的小数点为分界点，向左（向右）每四位取成一位，接着将这四位二进制按权相加，然后，按顺序进行排列，小数点的位置不变，得到的数字就是我们所求的十六进制数。如果向左（向右）取四位后，取到最高（最低）位时候，如果无法凑足四位，可以在小数点最左边（最右边），即整数的最高位（最低位）添 0，凑足四位。</p><p>　　例：将二进制的 (11010111)B 转换为十六进制的步骤如下：</p><p>1. 0111 = 7；</p><p>2. 1101 = D；</p><p>3. 读数，读数从高位到低位，即 (11010111)B=(D7)H。</p><p><a href="https://images0.cnblogs.com/blog/48305/201501/191446167506929.png"><div class="sr-rd-content-center-small"><img class="" src="https://images0.cnblogs.com/blog/48305/201501/191446173913759.png"></div></a></p><p>（Figure12：图解二进制 → 十六进制）</p><ul>
+<li><strong><a name="_labelConvert34"></a>十六进制 → 二进制</strong></li>
+</ul><p>　　方法：取一分四法，即将一位十六进制数分解成四位二进制数，用四位二进制按权相加去凑这位十六进制数，小数点位置照旧。</p><p>　　例：将十六进制的 (D7)H 转换为二进制的步骤如下：</p><p>1. D = 1101；</p><p>2. 7 = 0111；</p><p>3. 读数，读数从高位到低位，即 (D7)H=(11010111)B。</p><p><a href="https://images0.cnblogs.com/blog/48305/201501/191446183444917.png"><div class="sr-rd-content-center-small"><img class="" src="https://images0.cnblogs.com/blog/48305/201501/191446194223347.png"></div></a></p><p>（Figure13：图解十六进制 → 二进制）</p><h2 id="sr-toc-6"><strong><a name="_labelConvert40"></a>(四) （八进制） ↔ （十六进制）</strong></h2><p><a href="https://images0.cnblogs.com/blog/48305/201501/191446207353847.png"><div class="sr-rd-content-center"><img class="" src="https://images0.cnblogs.com/blog/48305/201501/191446216102748.png"></div></a></p><p>（Figure14：八进制与十六进制之间的转换）</p><ul>
+<li><strong><a name="_labelConvert41"></a>八进制 → 十六进制</strong></li>
+</ul><p>　　方法：将八进制转换为二进制，然后再将二进制转换为十六进制，小数点位置不变。</p><p>　　例：将八进制的 (327)O 转换为十六进制的步骤如下：</p><p>1. 3 = 011；</p><p>2. 2 = 010；</p><p>3. 7 = 111；</p><p>4. 0111 = 7；</p><p>5. 1101 = D；</p><p>6. 读数，读数从高位到低位，D7，即 (327)O=(D7)H。</p><p><a href="https://images0.cnblogs.com/blog/48305/201501/191446224386634.png"><div class="sr-rd-content-center"><img class="" src="https://images0.cnblogs.com/blog/48305/201501/191446233756320.png"></div></a></p><p>（Figure15：图解八进制 → 十六进制）</p><ul>
+<li><strong><a name="_labelConvert42"></a>十六进制 → 八进制</strong></li>
+</ul><p>　　方法：将十六进制转换为二进制，然后再将二进制转换为八进制，小数点位置不变。</p><p>　　例：将十六进制的 (D7)H 转换为八进制的步骤如下：</p><p>1. 7 = 0111；</p><p>2. D = 1101；</p><p>3. 0111 = 7；</p><p>4. 010 = 2；</p><p>5. 011 = 3；</p><p>6. 读数，读数从高位到低位，327，即 (D7)H=(327)O。</p><p><a href="https://images0.cnblogs.com/blog/48305/201501/191446245008763.png"><div class="sr-rd-content-center"><img class="" src="https://images0.cnblogs.com/blog/48305/201501/191446253919136.png"></div></a></p><p>（Figure16：图解十六进制 → 八进制）</p><h1 id="sr-toc-7"><strong><a name="_labelExtension"></a>四. 扩展阅读</strong></h1><p>　　1. 包含小数的进制换算：</p><p>(ABC.8C)H=10x16^2+11x16^1+12x16^0+8x16^-1+12x16^-2</p><p>=2560+176+12+0.5+0.046875</p><p>=(2748.546875)D</p><p>　　2. 负次幂的计算：</p><p>2^-5=2^(0-5)=2^0/2^5=1/2^5</p><p>同底数幂相除，底数不变，指数相减，反过来</p><p>3. 我们需要了解一个数学关系，即 23=8，24=16，而八进制和十六进制是用这关系衍生而来的，即用三位二进制表示一位八进制，用四位二进制表示一位十六进制数。接着，记住 4 个数字 8、4、2、1（23=8、22=4、21=2、20=1）。</p><h1 id="sr-toc-8"><strong><a name="_labelReferences"></a>五. 参考文献（References）</strong></h1><p><a href="http://www.cnblogs.com/lds85930/archive/2007/09/19/897912.html">二进制、八进制、十进制、十六进制之间转换</a></p><p><a href="http://jingyan.baidu.com/article/ea24bc39a597d3da63b33168.html">二进制如何转换成八进制</a></p></sr-rd-content>
+            <sr-rd-footer>
+                <sr-rd-footer-group>
+                    <sr-rd-footer-line></sr-rd-footer-line>
+                    <sr-rd-footer-text>全文完</sr-rd-footer-text>
+                    <sr-rd-footer-line></sr-rd-footer-line>
+                </sr-rd-footer-group>
+                <sr-rd-footer-copywrite>
+                    <div>本文由 <a href="http://ksria.com/simpread" target="_blank">简悦 SimpRead</a> 转码，用以提升阅读体验，<a href="https://www.cnblogs.com/gaizai/p/4233780.html#_labelConvert13" target="_blank">原文地址 </a></div>
+                </sr-rd-footer-copywrite>
+            </sr-rd-footer>
+        </sr-read>
+    </body>
+    </html>
