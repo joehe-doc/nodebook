@@ -1,0 +1,415 @@
+<!DOCTYPE html> <html style><!--
+ Page saved with SingleFile 
+ url: https://www.jdon.com/55222.html# 
+ saved date: Sun May 14 2023 13:11:49 GMT+0800 (中国标准时间)
+--><meta charset=utf-8>
+<meta http-equiv content="IE=edge,chrome=1">
+<meta name=viewport content="width=device-width, initial-scale=1">
+<title>定制Spring Boot启动函数的6种不同方式 - stacktraceguru</title>
+<meta property=og:type content=article>
+<meta property=og:url content=https://www.jdon.com/55222.html>
+<meta property=og:release_date content="2020-10-27 08:07">
+<meta name=keywords content=SpringBoot框架,>
+<meta name=description content="  在开发Spring Boot应用程序时，有时我们需要在启动时运行一段代码。这段代码可以是任何类型，从记录某些信息到设置数据库，cron作业等。我们不能仅将此代码放入构造函数中，因为所需的变量或服务可能尚未初始化。这可能导致空指针或其他一些异常。 由于多种原因，我们需要在应用程序.. ">
+<meta name=og:title content="定制Spring Boot启动函数的6种不同方式 - stacktraceguru">
+<meta name=og:description content="  在开发Spring Boot应用程序时，有时我们需要在启动时运行一段代码。这段代码可以是任何类型，从记录某些信息到设置数据库，cron作业等。我们不能仅将此代码放入构造函数中，因为所需的变量或服务可能尚未初始化。这可能导致空指针或其他一些异常。 由于多种原因，我们需要在应用程序.. ">
+<link rel=sitemap type=application/xml title=Sitemap href=https://www.jdon.com/sitemap>
+<link rel=alternate type=application/rss+xml title=解道订阅 href=https://www.jdon.com/rss>
+<link rel=canonical href=https://www.jdon.com/55222.html>
+<style>html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}article,footer,header,main,nav{display:block}a{background:0}a:active,a:hover{outline:0}b{font-weight:700}h1{margin:.67em 0}img{border:0}pre{overflow:auto}input{font:inherit;margin:0}table{border-collapse:collapse;border-spacing:0}td{padding:0}*{-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box}:before,:after{-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box}html{font-size:62.5%;-webkit-tap-highlight-color:rgba(0,0,0,0)}body{background-color:#fff}input{font-family:inherit}a{text-decoration:none}a:hover,a:focus{color:#2a6496;text-decoration:underline}a:focus{outline:thin dotted;outline:5px auto -webkit-focus-ring-color;outline-offset:-2px}img{vertical-align:middle}h1,h3{font-family:inherit;line-height:1.1}h1,h3{margin-top:20px;margin-bottom:10px}h3{font-size:24px}ul{margin-top:0;margin-bottom:10px}.list-inline{padding-left:0;list-style:none;margin-left:-5px}.list-inline>li{display:inline-block;padding-left:5px;padding-right:5px}pre{font-family:Menlo,Monaco,Consolas,"Courier New",monospace}pre{display:block;padding:9.5px;margin:0 0 10px;font-size:13px;line-height:1.42857143;word-break:break-all;color:#333;background-color:#f5f5f5;border:1px solid #ccc;border-radius:4px}.container{margin-right:auto;margin-left:auto;padding-left:15px;padding-right:15px}@media(min-width:768px){.container{width:750px}}@media(min-width:992px){.container{width:970px}}@media(min-width:1200px){.container{width:1170px}}.row{margin-left:-15px;margin-right:-15px}.col-md-4,.col-md-8,.col-md-12{position:relative;min-height:1px;padding-left:15px;padding-right:15px}@media(min-width:992px){.col-md-4,.col-md-8,.col-md-12{float:left}.col-md-12{width:100%}.col-md-8{width:66.66666667%}.col-md-4{width:33.33333333%}}table{max-width:100%;background-color:transparent}.form-control{display:block;width:100%;height:34px;padding:6px 12px;font-size:14px;line-height:1.42857143;color:#555;background-color:#fff;background-image:none;border:1px solid #ccc;border-radius:4px;-webkit-box-shadow:inset 0 1px 1px rgba(0,0,0,.075);box-shadow:inset 0 1px 1px rgba(0,0,0,.075);-webkit-transition:border-color ease-in-out .15s,box-shadow ease-in-out .15s;transition:border-color ease-in-out .15s,box-shadow ease-in-out .15s}.form-control:focus{border-color:#66afe9;outline:0;-webkit-box-shadow:inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6);box-shadow:inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6)}.form-control::-webkit-input-placeholder{color:#999}.collapse{display:none}.dropdown-toggle:focus{outline:0}.nav{margin-bottom:0;padding-left:0;list-style:none}.nav>li{position:relative;display:block}.nav>li>a{position:relative;display:block}.nav>li>a:hover,.nav>li>a:focus{text-decoration:none;background-color:#eee}.navbar{position:relative;min-height:50px;margin-bottom:20px;border:1px solid transparent}@media(min-width:768px){.navbar{border-radius:4px}}@media(min-width:768px){.navbar-header{float:left}}.navbar-collapse{max-height:340px;overflow-x:visible;padding-right:15px;padding-left:15px;border-top:1px solid transparent;box-shadow:inset 0 1px 0 rgba(255,255,255,.1);-webkit-overflow-scrolling:touch}@media(min-width:768px){.navbar-collapse{width:auto;border-top:0;box-shadow:none}.navbar-collapse.collapse{display:block !important;height:auto !important;padding-bottom:0;overflow:visible !important}}.container>.navbar-header,.container>.navbar-collapse{margin-right:-15px;margin-left:-15px}@media(min-width:768px){.container>.navbar-header,.container>.navbar-collapse{margin-right:0;margin-left:0}}.navbar-brand{float:left;font-size:18px;line-height:20px}.navbar-brand:hover,.navbar-brand:focus{text-decoration:none}.navbar-nav{margin:7.5px -15px}.navbar-nav>li>a{padding-top:10px;padding-bottom:10px;line-height:20px}@media(min-width:768px){.navbar-nav{float:left;margin:0}.navbar-nav>li{float:left}.navbar-nav>li>a{padding-top:15px;padding-bottom:15px}}@media(min-width:768px){.navbar-right{float:right !important}}.navbar-inverse{border-color:#080808}@-webkit-keyframes progress-bar-stripes{from{background-position:40px 0}to{background-position:0 0}}@keyframes progress-bar-stripes{from{background-position:40px 0}to{background-position:0 0}}.clearfix:before,.clearfix:after,.container:before,.container:after,.container-fluid:before,.container-fluid:after,.row:before,.row:after,.form-horizontal .form-group:before,.form-horizontal .form-group:after,.btn-toolbar:before,.btn-toolbar:after,.btn-group-vertical>.btn-group:before,.btn-group-vertical>.btn-group:after,.nav:before,.nav:after,.navbar:before,.navbar:after,.navbar-header:before,.navbar-header:after,.navbar-collapse:before,.navbar-collapse:after,.pager:before,.pager:after,.panel-body:before,.panel-body:after,.modal-footer:before,.modal-footer:after{content:" ";display:table}.clearfix:after,.container:after,.container-fluid:after,.row:after,.form-horizontal .form-group:after,.btn-toolbar:after,.btn-group-vertical>.btn-group:after,.nav:after,.navbar:after,.navbar-header:after,.navbar-collapse:after,.pager:after,.panel-body:after,.modal-footer:after{clear:both}@-ms-viewport{width:device-width}@font-face{font-family:"icomoon";src:url(data:font/woff;base64,d09GRgABAAAAABk8AAsAAAAAGPAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABPUy8yAAABCAAAAGAAAABgDxIOn2NtYXAAAAFoAAAA3AAAANx3XXeEZ2FzcAAAAkQAAAAIAAAACAAAABBnbHlmAAACTAAAFDgAABQ4OxM6P2hlYWQAABaEAAAANgAAADYgeNUPaGhlYQAAFrwAAAAkAAAAJAhUBGtobXR4AAAW4AAAAGAAAABgT/IATmxvY2EAABdAAAAAMgAAADIyJiy6bWF4cAAAF3QAAAAgAAAAIAAoAKtuYW1lAAAXlAAAAYYAAAGGmUoJ+3Bvc3QAABkcAAAAIAAAACAAAwAAAAMDngGQAAUAAAKZAswAAACPApkCzAAAAesAMwEJAAAAAAAAAAAAAAAAAAAAARAAAAAAAAAAAAAAAAAAAAAAQAAA8dcDwP/AAEADwABAAAAAAQAAAAAAAAAAAAAAIAAAAAAAAwAAAAMAAAAcAAEAAwAAABwAAwABAAAAHAAEAMAAAAAsACAABAAMAAEAIPAC8AfwFfAa8DnwYvBu8HPwi/CQ8J7wyvDl8PbxYvFk8Yrx1//9//8AAAAAACDwAvAG8BXwGvA58GLwbvBz8IvwkPCe8Mrw5fD28WLxZPGK8db//f//AAH/4xACD/8P8g/uD9APqA+dD5kPgg9+D3EPRg8sDxwOsQ6wDosOQAADAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAH//wAPAAEAAAAAAAAAAAACAAA3OQEAAAAAAQAAAAAAAAAAAAIAADc5AQAAAAABAAAAAAAAAAAAAgAANzkBAAAAAAIAAP+3A7cDbgAbAEIAAAE0Jy4BJyYjIgcOAQcGFRQXHgEXFjMyNz4BNzYBFAYjIiYvAQ4BIyInLgEnJjU0Nz4BNzYzMhceARcWFRQGBxceARUCkhQURi4vNTUuL0UVFBQVRS8uNTUvLkYUFAElKx4PGwrEMnU9U0lKbR8gIB9tSklTVElJbSAgJSLECgsB2zUvL0UUFBQURS8vNTUuL0UUFRUURS8u/loeKwsLwyMkIB9uSUlTVElJbh8gIB9uSUlUPHUzxAkbDwAAAAIAAAAaA7cDpQAJADgAAAE3LwEPARcHNxcBFAYPARMcARUUBiMiJiclBQ4BIyImNTQ2NRMnLgE1NDY3JRM+ATMyFhcTBR4BFQKKr/JsbPGvKtjYAQQJBs8xCwwGDAX+//8ABgsGDAwBMdAFCRULAR+ABA8JCg8DgQEfChYBeaoj29sjqvBxcQG8CA4Fy/7jAwYDCxEEA4aGAwQRCwMGAwEdywUOCA0MASoBBAgQEAj+/CoBDA0AAAACAAAAAALbA24AGwA3AAAlFAYjISImNTQ3PgE3NjMeATMyNjcyFx4BFxYVAxQHDgEHBiMiJy4BJyY1NDc+ATc2MzIXHgEXFgLbRzL+GDJICAgqJSQ4I1s1NFwjOCQkKggIkhERPCgoLS4oKDsREhIROygoLi0oKDwREZc+WVk+OTk6XR4dISgoIR0eXTo5OQH7LSgoPBERERE8KCgtLigoOxESEhE7KCgAAAAAAgATAEkDpAMlABUAPAAAAREUBisBNSMVIyImNRE0NjEJATAWFTcHDgErASImJwkBDgEnIiYvASY2NwE2Mh8BNTQ2OwEyFh0BFx4BBwMlFg/bk9sPFgEBSAFJAX8jAwYDAgQGAv50/nUDBwQDBwIjBQIFAZsSMxKLCwhtCAt9BQIFAYD+7g8W3NwWDwESAQIBD/7xAgEnKgIEAgIBSv62AgMBBAIqBg8FAVYPD3RvCAsLCOloBQ8GAAMAAAAAA24DbgAfADwAWQAAARQGDwEOASMiJi8BLgE3PgE7ATU0NjsBMhYdATMyFhUDIgcOAQcGFRQXHgEXFjMyNz4BNzY1NCcuAScmIwEUBw4BBwYjIicuAScmNTQ3PgE3NjMxMhceARcWAoADA7YDBwMEBgO3BAICAgkGbgoIbgcLbgcLyUA5OVQZGBgZVDk5QEA5OFUYGRkYVTg5QAG3IyJ3UFBbW1BQdyMiIiN3UFBbW1BQdyIjAaUEBwO2AwMDA7YFCgUGBskICgoIyQsHAUkZGFU4OUBAOTlUGRgYGVQ5OUBAOThVGBn+yVtQUHciIyMid1BQW1tQUHciIyMid1BQAAAAAAQAAABJBAADbgAPAB8AMABAAAAlFRQGIyEiJj0BNDYzITIWNRUUBiMhIiY9ATQ2MyEyFjUVFAYjISImPQE0NjMhMhYVNRUUBiMhIiY9ATQ2MyEyFgQAFg/8Sg8WFg8Dtg8WFg/8Sg8WFg8Dtg8WFg/8Sg8WFg8Dtg8WFg/8Sg8WFg8Dtg8Wt0kPFhYPSQ8VFcxJDxUVD0kPFhbNSQ8WFg9JDxUVD9tJDxYWD0kPFhYAAQAeAAADmQNJAC0AAAEUBg8BDgEjIiYvAREUBisBIiY1EQcOASMiJi8BLgE1NDY3AT4BMzIWFwEeARUDmQwKKgsbDg8bCqgsHUkdLKgKGw8OGworCgwMCgF0ChsODxsKAXQKDAGMDxoKKwsLCwun/m4fJCQfAZKnCwsLCysKGg8PGwoBdAoLCwr+jAobDwAAAwAAAEkEAALbACgAOwBjAAABLgEnHgEVFAcOAQcGIyInLgEnJjU0NjcOAQcWFx4BFxYzMjc+ATc2NyU0JiMiBhUUFjMyNjU0NjMyNjUFFAYHBgcOAQcGIyInLgEnJicuATU0Njc2Nz4BNzYzMhceARcWFx4BA7cpbkMREhQURi4vNTUvLkYUFBIRQ24pJS8wb0A/RUU/QG8wLyX+ZBALSGYRCwsQRjELEAHlBgUoNjeCSUlMTElJgjc2KAUGBgUoNjeCSUlMTElJgjc2KAUGAZI/aSIdQiI0Ly9FFBUVFEUvLzQiQh0iaT84Ly9EExMTE0QvLzjcCxBmSAsQEAsxRhEL3AoUCUE1NkwVFRUVTDY1QQkUCgsUCUA2NUwVFRUVTDU2QAkUAAAPAAD/twO3A7cAAwAIAAwAEQAVABoAHwAjACgAOAA8AEEARQBWAHsAADczNSMXMzUjFSczNSMXMzUjFSczNSMBMzUjFQMzNSMVATM1IyczNSMVAzU0JisBIgYdARQWOwEyNgEzNSMnMzUjFTsBNSM3NTQmKwEiBh0BFBY7ATI2NTcRFAYjISImNRE0NjsBNTQ2OwEyFh0BMzU0NjsBMhYdATMyFhVJpaXJt7fJpaXJt7fJpaUBpbe33Le3Abelpdu3t8kLCCQICwsIJAgLAaSlpdu3t9ulpRILByQICwsIJAcL3Cse/NseKyseSTYmJCY22zYmJCY2SR4rAKWlpaXJt7e3t9yk/belpQGlpKT+W6Ukt7cB7qQICwsIpAcLC/4ZtyWkpKRupAgLCwikBwsLByT9JR4rKx4C2x4sNiY2NiY2NiY2NiY2LB4AAAIAAABJA4ADJQAeAD4AACUUFisBIiY1ETQ2OwEyFhUUFisBIgYVERQWOwEyFhUBFAYHAQ4BIyImPQEhIiY9ATQ2MyE1NDYzMhYXAR4BFQFuARS2RWBgRbYICwEUtiY2NiakCxoCEgYF/skFDQcPFv8ADxYWDwEAFg8HDQUBNwUGgAwrYUQBkkRhCwgMKzUm/m4mNgIQATcHDgX+yQUGFg+lFQ/cDxWlDxUFBv7KBg0HAAAAAAIAAABJA24DJQAfAD4AAAEUBgcBDgEjIiY9ASEiJj0BNDYzITU0NjMyFhcBHgEVNxEUBisBIiY1NCY7ATI2NRE0JisBIiY1NCY7ATIWFQKlBgX+yQUOBw8V/wAPFhYPAQAVDwcOBQE3BQbJYUS3BwsBE7cmNjYmpAsaARO3RGEBtwcOBf7JBQYWD6UVD9wPFaUPFQUG/soGDQfJ/m5EYQsHDCs2JgGSJjUDEAwrYUQAAwAAAEkDJQNuAAsANgBhAAA3FAYjIiY1NDYzMhYFFAYHDgErASImJyYnLgEnJicuAT0BNDY3PgE7ARYXHgEXFhcWFx4BFxYXBRQGBw4BKwEiJicmJy4BJyYnLgE9ATQ2Nz4BOwEWFx4BFxYXFhceARcWF9tALS5AQC4tQAElBQUFDghNDhQCBhwbWDk5Qg4TBgYFDQcCLiwsUiYlICEaGiYMCwQBJQUGBQ0IUg4VAQczMqVtbX0OFAYFBg0HAUtISYY+PTU1Kyo8ERIEty5AQC4tQUFzCA4GBgYTDkI5OVgcGwYCFA5OBw4FBQUECwwmGhohICUmUiwsLQIHDgUGBhQOfW1tpTMyBwEVDlIIDQUGBQQSETwqKjY1PT6GSElLAAAAAAYAAAAlBAADSQAMABgAKQA1AEUAVQAANxQGIyImNTQ2MzIWFREUBiMiJjU0NjMyFgEVFAYjISImPQE0NjMhMhYVARQGIyImNTQ2MzIWARUUBiMhIiY9ATQ2MyEyFhEVFAYjISImPQE0NjMhMhbbQC0uQEAuLUBALS5AQC4tQAMlCwf9SQcLCwcCtwcL/NtALS5AQC4tQAMlCwf9SQcLCwcCtwcLCwf9SQcLCwcCtwcLki1AQC0uQEAuASUuQEAuLUFB/uVuBwsLB24HCwsHAhItQEAtLkBA/uVuBwsLB24HCwsBHW0ICwsIbQgLCwAAAAIAAP+3BAADJQAlAFcAAAEiBw4BBwYVFBYfAQcOAQc+AT8BFx4BMzI3PgE3NjU0Jy4BJyYjARQHDgEHBiMiJicOAQcOAQcjIiYnMSY2Nz4BNyYnLgEnJjU0Nz4BNzYzMTIXHgEXFhUCAFlQUHgjI1JKMhAIFAwsTiQYIRImEllQUHgjIyMjeFBQWQIAKCiLXl1qFSoUOIVKDyERAwgOAgILBhs5FCwkIzMNDigoi15dampdXosoKALbFxdQNTY7QHQqHTceMBQSMR8VAwIDGBdQNTU8OzY1UBcX/txMQ0JjHR0DAjJGEwQGAgwKCw8HH0RIGR8gSSkoLExCQ2MdHR0dY0NCTAAAAAYAAP+3A24DtwATABwAJgA3AEcAWAAAAR4BFREUBiMhIiY1ETQ2MyEyFhcHFTMuAS8BLgETESMiJj0BIREhATQ2MyEyFh0BFAYjISImPQEFMhYdARQGIyEiJj0BNDYzBTIWHQEUBiMhIiY9ATQ2MyEDRxAXIBf9ABcgIBcCABc3EEzXAwcDsgMO1e4XIP5JAtz9tgsIAZIICgoI/m4ICwGlCAoKCP5uCAsLCAGSCAoKCP5uCAsLCAGSAt4QNxf9bhcgIBcDkhcgFxAn1wgNA7MDB/yZAkkgF+78kgHuBwsLByUICgoIJYALCCQICgoIJAgLkwoIJAgLCwgkCAoAAAAEABP/twNRA7cADAArAFAAZQAAJTQmIyIGFRQWMzI2NQUUBg8BDgEjIiYvAS4BNz4BOwERNDY7ATIWFREzMhYlFAcOAQcGIyImJy4BJzceARceATMyNjcjDgEjIiY1NDYzMhYVAxUhNTM1NDY9ASMHDgEPASc3MxEzAwEyIh4jKCkbKf6kBAK2AwcEAwcDtwMDAgMJBm0LCG0IC20ICwGsDAwxJSYzEx8LBwwFFgQJBQgWDDQ3CAEMLhk+S1E/RGAR/vRfAQEEAgcGIy9tR17JIz0rIB8tHxhJBAcDtgMCAgO3BAsFBQYDEwcLCwf87QofKysrRBYVBQQCBANAAgMBAwVILQ0QVDc7VWpdAZpBQfcGCgUJBwQIBiExav6KAAADAAAAAAOSA24ACwAcAFwAADc0JiMiBhUUFjMyNhMRFAYrASImNRE0NjsBMhYVIRQGBx4BFRYGBxYUBw4BBxYGBw4BKwEiJicuASMuATURNDY3PgE3PgE3PgE3PgE3PgEzMhYVFAYHDgEHMzIWFZIVDxAVFRAPFVwWD6QPFhYPpA8WAqQRDgUDAQwNBQUEEAsDDxASOSZJPnEuGzAPDxYVDhBCExAdDRENBQUPEgUOB2AgFQsFCASfLEG3DxUVDxAVFQE0/pMPFhYPAW0PFhYPFi4RDRgGFicRECIREBwKIDQTFhcgEAkQARUPAW4OFQIBTRgUJA0RMBkZMhIFBnIhIzQWCg0OQS0AAAAABwAAABgD8wNPAAwAGQAmAEIAcQCMAKgAACU2JicmBgcGFhcWNjc3NiYnJgYHBhYXFjY3Fw4BJy4BNz4BFx4BBzcmJy4BJyYHBgcOAQcGFxYXHgEXFjc2Nz4BNzY3FAcOAQcGIyInLgEnJjU0Nz4BNzY3Njc+ARcyFx4BBwY2FT4BFxYGBwYWFx4BFQMeAQcOAScuATcxNiYnLgEHMQYmJyY2NzYWFzceAQcxDgEnLgE3MTYmJy4BBwYmJyY2NzE2FhcBggwMFBMtDAwKExQuDTUFBQgHEQQEBAcIEQRkGoE/Pi4bG3c9PzcasgQcG1k6OUA/NzZOFBUEBRscWTk6P0A2N00VFKwhIXpVVmhQTU15JiUKCyccHCUwMzJbJSUWEgUMBh9OfRkNAQwGCwssUCoYDgsEGQ0NDQQFBgwMIRENGAMDDw4iQxlnMxsVBR0PEA8FDxMkJGMwEBwDBBIQRYsy2RQoCAgPExMoCQkPFEUIDwMDBwcIDgQDBwc9OjcVE2o2NTUQEGc6XCkjIi8KCgYGFhU/JycqKiIiLwoLBwYVFj8nJycwMzRUHBsTEkcyM0AhIyRJJSUkMCMiJAEVEz4nEwgBIQIkEzQeDwgEDUQ7AWUbRiAODAQEGQ0RIQ4NCgMDDw0OFwMIFRtdOI5DEA4FBRwQL2YnKB4KBBIQEBsDDyo4AAAAAAEACv+3A/YDtwBxAAATLgE1NDY3JjY3NDc+ATc2Nz4BMzIWFxYXHgEXFh8BHgEVFAYVFBYVHgEVFAYjIiYnNCIjBw4BBx4BFw4BBw4BIyImJyYGJw4BIyInLgEnJjU0Njc+ATcyNjM0MjUnLgEvASIGBw4BBzEiNCcuATU0NjeaAwEMCAEJCQ4OMSAgJCxdMCZPIzMgICoNDQoBDBMKBCU5ExgRIAYBAQMNIhwYQAcCAQMZbSc0WzEKHAsaaiURIyNHGxsNEA4WEAIEAgEBHkMHAgMDAQopGQQDBgdNQwHqCA4IDCEJCyQIJysrTx8gERUREQ8VHh5LLSwzAhMsFwwWCwEFATZ4Qw9LOgsBAyNBGxgSKQUKBCUTFw8DAQEcFAECDxAPHBgWEAILAQEBAQIHcB8CCgIWJwMFAQ4bEFaCMgAAAAYAAP/aBJIDkwALABcAIwAvAFoAeAAAATQmIyIGFRQWMzI2ATQmIyIGFRQWMzI2AzQmIyIGFRQWMzI2ATQmIyIGFRQWMzI2Jy4BIyIHDgEHBhUUFhcOASMiJicHNyYnLgEnJjU0Nz4BNzYzMhceARcWFwEUBgcXJw4BIyInLgEnJjU0Nz4BNzYzMhceARcWFQFLHBgXJycXGBwBqRwYDxoaDxgchxwXGCcnGBccAWsdFw8aGg8XHZgKFApKQEBfHBsHBgoTCidDJ5ApJx8fKgwLISBxS0xVTUVGcCYnDQFSUj8gch8/H0pAQF8bHBwbX0BASkZAQGEcHQKvGBwcGBccHP72DxoaDxAaGgExGBwcGBccHP72DxoaDxAaGvMBARoaWTs8RBYsFAEBDQdIfBwfH0YnJypKQUBfGxsWFk02NT7+v0Z6Lmg/CA4YGFE3Nz4+NzdRGBgYGFE3Nz4AAAABAAAAAAAAMnvXCV8PPPUACwQAAAAAAN5kSFIAAAAA3mRIUgAA/7cEkgO3AAAACAACAAAAAAAAAAEAAAPA/8AAAASSAAAAAASSAAEAAAAAAAAAAAAAAAAAAAAYBAAAAAAAAAAAAAAAAgAAAAO3AAADtwAAAtsAAAO3ABMDbgAABAAAAAO3AB4EAAAAA7cAAAOAAAADbgAAAyUAAAQAAAAEAAAAA24AAANiABMDkgAABA8AAAQAAAoEkgAAAAAAAAAKABQAHgCEAOABNgGSAhYCbgK2A0oD8ARKBKIFNAWsBjAGsAdAB8YIyglsChwAAAABAAAAGACpAA8AAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAADgCuAAEAAAAAAAEABwAAAAEAAAAAAAIABwBgAAEAAAAAAAMABwA2AAEAAAAAAAQABwB1AAEAAAAAAAUACwAVAAEAAAAAAAYABwBLAAEAAAAAAAoAGgCKAAMAAQQJAAEADgAHAAMAAQQJAAIADgBnAAMAAQQJAAMADgA9AAMAAQQJAAQADgB8AAMAAQQJAAUAFgAgAAMAAQQJAAYADgBSAAMAAQQJAAoANACkaWNvbW9vbgBpAGMAbwBtAG8AbwBuVmVyc2lvbiAxLjAAVgBlAHIAcwBpAG8AbgAgADEALgAwaWNvbW9vbgBpAGMAbwBtAG8AbwBuaWNvbW9vbgBpAGMAbwBtAG8AbwBuUmVndWxhcgBSAGUAZwB1AGwAYQByaWNvbW9vbgBpAGMAbwBtAG8AbwBuRm9udCBnZW5lcmF0ZWQgYnkgSWNvTW9vbi4ARgBvAG4AdAAgAGcAZQBuAGUAcgBhAHQAZQBkACAAYgB5ACAASQBjAG8ATQBvAG8AbgAuAAAAAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==)format("woff");font-weight:normal;font-style:normal}[class*=" fa-"]{font-family:"icomoon";display:inline-block;font-size:inherit;font-style:normal;text-rendering:auto;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}.fa-search:before{content:""}.fa-star-half-full:before{content:""}.fa-home:before{content:""}.fa-feed:before{content:""}.fa-list-ul:before{content:""}.fa-weibo:before{content:""}.fa-qq:before{content:""}.fa-weixin:before{content:""}.fa-arrow-circle-o-down:before{content:""}.fa-arrow-circle-up:before{content:""}.fa-calendar:before{content:""}.fa-list-ul:before{content:""}.fa-thumbs-o-up:before{content:""}.fa-user:before{content:""}body{background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAJCAIAAABxOqH0AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAAFiUAABYlAUlSJPAAAAATSURBVBhXY/jw6SUmGlqin14CABI6r/bL30nYAAAAAElFTkSuQmCC)fixed;color:#666;font-weight:400;font-size:15px;font-family:"Ek Mukta",sans-serif;line-height:1.6em}body,html{margin:0;padding:0;width:100%;word-wrap:break-word}::selection{background:#000;color:#fff;text-shadow:none}html{-webkit-text-size-adjust:none}img{height:auto;max-width:100%}h1,h3{color:#555;font-weight:600}p{margin:0 0 20px}.indent{text-indent:0}a{color:#41872d;-webkit-transition:all .2s ease-in-out;-moz-transition:all .2s ease-in-out;transition:all .2s ease-in-out}a:focus,a:hover{color:#000;text-decoration:none}.bige20{font-size:24px}.post:after,.post:before,article:after,article:before,section:after,section:before{clear:both;display:block;visibility:hidden;width:0;height:0;content:" "}#top{padding:10px 0 0;border-bottom:1px solid #ddd;background:#fff;color:#000}#top a{color:#000}#top a:hover{color:#69bf03}.link{text-align:right}.link a{display:inline-block;text-decoration:none;letter-spacing:1px;font-weight:700;font-size:12px}#menu{border-radius:0;background-color:#000}#menu a.navbar-brand:hover{color:#fff}#menu .navbar-brand{margin:0;padding:14px 18px;height:auto;background-color:#000;text-transform:uppercase}#menu .navbar-collapse{padding:0}#menu .navbar-nav{background-color:#000}#menu li.dropdown:active>a,#menu li.dropdown:focus>a,#menu li.dropdown:hover>a{background:#41872d;color:#fff}#menu ul.nav li a{padding:14px 19px;border-radius:5px;color:#fff;font-weight:700}#menu ul.nav li.dropdown a{border-top-right-radius:5px;border-bottom-right-radius:0;border-bottom-left-radius:0;border-top-left-radius:5px}#menu .nav>li>a:focus,#menu .nav>li>a:hover{background-color:#41872d;color:#fff}#menu .top-social{padding:5px;background-color:#000;text-align:center;font-size:20px}#menu ul.top-social{margin:0}#menu ul.top-social li{width:38px;height:38px}#menu ul.top-social a i{width:38px;height:38px;border-radius:50%;background-color:#41872d;color:#fff;line-height:1.9}#menu ul.top-social a i:hover{background-color:#fff;color:#000}@media(max-width:991px){.navbar-header{float:none}.navbar-right{float:none !important}.navbar-collapse{border-top:1px solid transparent;box-shadow:inset 0 1px 0 rgba(255,255,255,0.1)}.navbar-collapse.collapse{display:none !important}.navbar-nav{float:none !important;margin-top:7.5px}.navbar-nav>li{float:none}.navbar-nav>li>a{padding-top:10px;padding-bottom:10px}}#page-content{padding:0}#page-content.single-page{margin-top:20px}.box{padding:10px 10px;background-color:#fff}.box:after,.box:before{clear:both;display:block;visibility:hidden;width:0;height:0;content:" "}.box .info{margin:5px 0 10px 0}.box .info a{border-bottom:1px solid #000;box-shadow:inset 0-1px 0#000;color:#000;transition:all ease 150ms}.box .info a:hover{border-bottom:1px solid #000;box-shadow:inset 0-1.3em 0#000;color:#fff;text-decoration:none;text-shadow:none}.info{font-size:14px}.info i{margin-right:8px}.info span{margin-right:10px}.info a{line-height:1}.info a:hover{text-decoration:underline}.widget{overflow:hidden;text-overflow:ellipsis;word-break:break-all;padding:10px 20px;background:#fff}.widget:after,.widget:before{clear:both;display:block;visibility:hidden;width:0;height:0;content:" "}.widget ul{margin:0;padding:0;list-style:none}.post{margin-bottom:15px}.post:after,.post:before{clear:both;display:block;visibility:hidden;width:0;height:0;content:" "}.post:last-child{margin-bottom:0}.post:after,.post:before{clear:both;display:block;visibility:hidden;width:0;height:0;content:" "}.post .info a{margin:1px 0 3px;font-size:13px}.post .info{margin-top:0;font-size:12px}footer{margin-top:20px;padding:20px 0 10px;background-color:#202020;color:#ddd}footer .wrap-footer{padding-bottom:20px;border-bottom:1px solid #444}footer .copy-right{padding-top:20px;text-align:center}footer .footer-1 p{margin-bottom:10px;padding-bottom:7px;border-bottom:1px solid #444}footer .footer-3 ul{padding:0}footer .footer-3 ul li{margin-bottom:15px;padding-bottom:10px;border-bottom:1px solid #444;list-style:none}footer .footer-3 ul li:last-child{border-bottom:0}footer .footer-3 ul li a{color:#999}footer .footer-3 ul li a:hover{color:#666}.article{font-family:-apple-system,BlinkMacSystemFont,Helvetica Neue,PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,WenQuanYi Micro Hei,sans-serif;font-size:16px;line-height:27px;color:#0b1304;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}DIV.diggArea{margin:0 auto;background-repeat:no-repeat;width:45px;height:53px;background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC0AAAA1CAMAAADiQZJeAAABtlBMVEUAAACAAAAAgACAgAAAAICAAIAAgIDAwMDA3MCmyvC4niy/pjW/pja/pje/pji/pzi/pzm/pzu/pzy/pz6/qEW/qUW/qUa/qkXAqD/AqEDAqEHAqELAqEPAqETHslbHs1nHs1rItFrJtljKtVnPvGTRv2zZxmzZx27byG7Tw3XTxHjXyH355Hr55Hv55X7PxZLWyILazpLf1J7n14br3Y/j15jh1Z3g1qLh2Kbn3rD55of654T654b554j554r554v66Yr56I756I/56ZD56ZH56ZL56ZP66pH56pX56pb56pf66pb66pf765b66pj665j665n665r565z665z67J367J7r4abq4avu46vq4bXq4bb67KP77qL67KT67af876f47av67an67q37767776/88K388a/88LP98bP88bT88bX88bf78rn88bn88rn88r388r7d3dfr5sTs5sbu6s7g4Nfi4trk5Nzw7NL888L888T99Mf69M799cn99c399c769tT89tH89tL89tP89tX99tT89tb+99X59dj59tn39uf39+j4+Oz5+e35+O75+e/6+vD6+vEgoiY9AAABMUlEQVRIie3SRVdCQRiH8XcN3EuKpK3Y2HHtBkFB7NZrt6hgNwZeML6xbmE2/1m447ecec57zgTNFefn5kFyimapYOrm5Q3yOFNI2Q/7O9uQw1gWmV83UTEzmZ43UE8mct4vo+6c5LhdQF07yH41jrq0k+14BHVkI+vBEGrPSpbdbtSWhYzr7ag1IxlW21BLBtIvwvW8nnST1agJHWnHKlFBLQleuPYIpBmE6wENZy364donkjAM116BxCBcB7hnB+DaL/LWo3Dt457NcUre2Rw36PnH1+H+ser+KlSfmoRQb7quDkmSOnuY9ZBAKldJuvoVWZYbSpl1l4rcLYyyxvf4dEUzu+GmiPL1qaQ6K29qrTn5UBgRiiZ/vpOpEhe1daeJJCv6V+MydabG6vA5LvwLs2MAHd2E4JcAAAAASUVORK5CYII=)}.diggArea .diggNum{margin:0 auto;padding-top:5px;padding-right:0;padding-bottom:0;padding-left:0;display:block;color:#a200ff;font-weight:lighter;font-size:16px;width:45px;font-family:Georgia;height:30px;text-align:center}.diggArea .top8{margin:0 auto;padding-top:0}.diggArea .diggLink{display:block;width:45px;color:#999;text-align:center}.linkblock{overflow:hidden;text-overflow:ellipsis;word-break:break-all;white-space:normal;padding:5px 5px;border:1px solid #ddd;border-radius:3px;background:#fff;box-shadow:0 15px 10px -15px rgb(7 62 11/40%)}.widget_tag_cloud{color:#333;box-shadow:0 0 3px 0 rgba(0,0,0,0.11);padding:1.875rem 1.563rem 2.5rem;margin:0 0 2.5rem}.tagcloud{margin:0;overflow:hidden;padding:0}.tagcloud .tag-cloud-link{background-color:#41872d;border:1px solid #e9e9e9;display:inline-block;padding:.188rem 1.25rem;margin:0 .188rem .625rem;color:#FFF;text-decoration:none}.displaycode{white-space:pre-wrap;word-wrap:break-word}</style>
+<!--[if lt IE 9]>
+        <script src="https://cdn.jdon.com/js/html5shiv.min.js"></script>
+        <script src="https://cdn.jdon.com/js/respond.min.js"></script>
+    <![endif]-->
+<link rel=icon href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 256 256%22><text y=%22203%22 font-size=%22224%22>☯</text></svg>"><style>.sf-hidden{display:none !important}</style><meta http-equiv=content-security-policy content="default-src 'none'; font-src 'self' data:; img-src 'self' data:; style-src 'unsafe-inline'; media-src 'self' data:; script-src 'unsafe-inline' data:; object-src 'self' data:; frame-src 'self' data:;"><style>img[src="data:,"],source[src="data:,"]{display:none!important}</style></head>
+<body>
+ <nav id=top>
+ <div class=container>
+ <div class=row>
+ <div class=col-md-12>
+ <a href=https://www.jdon.com/><img src=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAAAtCAMAAABvaz7CAAAAV1BMVEX///8AAAD/eAD/+fL1fiD/jCL/rWb/7t3/5Mr+nkT/iBL/fgn/kzP/2rb/zJn69u//plb/0afe3t78vYb/uXg3NzdmZmZUVFQcHByZmZmGhoa/v7+qqqr1osLyAAABs0lEQVRYw+3V2Y6jMBRF0RO7rueRMUP9/3c2IUlZLRypIyx1PbDfkIAlbGPj6OjV1xpKp58O5JciXAbhiMiJLPFBm1ed6mHJJ8e+khDaGeYGWbt5FzICShjGhOJAlD4k6wLH1BIZO2SyzPQcz3jWTEhM7ZBzh95YywaAPwIQB6sl5mbIBd4wxpy8G4UJJsVu3IWUixmKFuP1IYUJbMCl9uTnyLnjgt0LK1ICF8ZjboLMyKaKcChK/LsJcuOJ1RGO3qp4boCcIemBDFtE0YCpATLD2wdCaoMgOVwaIFcI9izFzaz0BrcGyA3EXgmJtYJkQtcA6WDYTzorJXlh4AlogMQ7UiJyuldAW6QrSJH6iCfSZri+odm2HliR0GbiJ+QKYj3WBmqyhEdIU1EEx5J0osnPeI4xVRAtsZSNj2MD5HRFqCBWAeDJxTYb5Iio3yDBhCZb/fop2VSHS1Hi/3JobY7oN0e8rUy81E514z6kNIMLuxktpcljOu1EShPiYP8yAoJzHtfTx8i4QYqCrItBQxYk5GJ8jIwbtQRA9to+Da1d8m+XDHYlvdC0pEWvOI6O/mt/ALPqGHGQQEItAAAAAElFTkSuQmCC width=100 height=40 loading=lazy></a>
+ <span class="list-inline top-link link" style=float:right>
+ <a href=https://www.jdon.com/forum><i class="fa fa-home"></i>Dojo</a>
+ <a href=https://www.jdon.com/threads><i class="fa fa-list-ul"></i>最新</a>
+ <a href=https://www.jdon.com/forum/threadDigSortedList><i class="fa fa-star-half-full"></i>最佳</a>
+ <a href=https://www.jdon.com/query/threadViewQuery.shtml><i class="fa fa-search"></i>搜索</a>
+ <a href=https://www.jdon.com/followus.html><i class="fa fa-feed"></i>订阅</a>
+ </span>
+ </div>
+ </div>
+ </div>
+ </nav>
+ 
+ <nav id=menu class="navbar container">
+ <div class=navbar-header>
+ <button type=button class="btn btn-navbar navbar-toggle sf-hidden" data-toggle=collapse data-target=.navbar-ex1-collapse></button>
+ <a class=navbar-brand href=https://www.jdon.com/>
+ <div class=logo><span>解道Jdon</span></div>
+ </a>
+ </div>
+ <div class="collapse navbar-collapse navbar-ex1-collapse">
+ <ul class="nav navbar-nav navbar-inverse">
+ <li><a href=https://www.jdon.com/design.htm>架构设计</a></li> 
+ <li class=dropdown><a href=# class=dropdown-toggle data-toggle=dropdown>领域驱动 <i class="fa fa-arrow-circle-o-down"></i></a>
+ <div class="dropdown-menu sf-hidden">
+ 
+ </div>
+ </li>
+ <li class=dropdown><a href=# class=dropdown-toggle data-toggle=dropdown>微服务 <i class="fa fa-arrow-circle-o-down"></i></a>
+ <div class="dropdown-menu sf-hidden">
+ 
+ </div>
+ </li>
+ <li class=dropdown><a href=# class=dropdown-toggle data-toggle=dropdown>编程设计 <i class="fa fa-arrow-circle-o-down"></i></a>
+ <div class="dropdown-menu sf-hidden">
+ 
+ </div>
+ </li>
+ <li class=dropdown><a href=# class=dropdown-toggle data-toggle=dropdown>模因梗 <i class="fa fa-arrow-circle-o-down"></i></a>
+ <div class="dropdown-menu sf-hidden">
+ 
+ </div>
+ </li> 
+ </ul>
+ <ul class="list-inline navbar-right top-social">
+ <li><a><i class="fa fa-weibo"></i></a></li>
+ <li><a><i class="fa fa-weixin"></i></a></li>
+ <li><a><i class="fa fa-qq"></i></a></li>
+ </ul>
+ </div>
+ </nav>
+ 
+<center>
+ </center>
+<div id=page-content class="single-page container">
+ <div class=row>
+ 
+ <div id=main-content class=col-md-8>
+ <div class=box>
+ 
+ <div id=messageListBody>
+ <article> 
+ <a name=23154907></a>
+<div class=row>
+ <div class=col-md-12>
+ <div class=box>
+ <header>
+ <div class=post_header>
+ <div class=post_title>
+ <div class=post_titlename>
+ <a href=https://stacktraceguru.com/springboot/run-method-on-startup target=_blank title=原始链接></a><h1 class=bige20><a href=https://stacktraceguru.com/springboot/run-method-on-startup target=_blank title=原始链接>定制Spring Boot启动函数的6种不同方式 - stacktraceguru</a>
+ </h1></div>
+ <div class=post_title2>
+ <div class="post_titleauthor info">
+ <i class="fa fa-calendar"></i>
+ 20-10-27 <span></span>
+ <span></span> 
+ <i class="fa fa-user"></i>
+ banq</div>
+ <div class=post_titleother>
+ </div>
+ </div>
+ </div>
+ </div>
+ </header> 
+ <div class=post_body>
+ <div class=post_bodyin>
+ <div class=post_body_content>
+ <div class=article>
+ <main id=body_23154907>
+ <p>
+ <br>在开发Spring Boot应用程序时，有时我们需要在启动时运行一段代码。这段代码可以是任何类型，从记录某些信息到设置数据库，cron作业等。我们不能仅将此代码放入构造函数中，因为所需的变量或服务可能尚未初始化。这可能导致空指针或其他一些异常。<br>由于多种原因，我们需要在应用程序启动时运行方法，<br><ul>
+<li>记录重要的事情或说应用程序已启动的消息
+<li>处理数据库或文件，建立索引，创建<a href=https://www.jdon.com/tag-313/ target=_blank><b>缓存</b></a>等。
+<li>启动后台进程，例如发送通知，从某些队列中获取数据等。
+</ul><br>&nbsp;<br><p class=indent><b>1.使用CommandLineRunner界面</b><br>CommandLineRunner是一个弹簧启动功能界面，用于在应用程序启动时运行代码。它位于软件包org.springframework.boot下。<br><br>在<a href=https://www.jdon.com/tag-15977/ target=_blank><b>上下文</b></a>初始化后的启动过程中，spring boot使用提供给应用程序的命令行参数调用其run（）方法。&nbsp;<br><br>要通知spring boot关于我们的commandlineRunner接口，我们可以实现它并在类上方添加@Component批注，或者使用@bean创建其bean。<br><br>实现CommandLineRunner接口的示例<br><p class=indent><table width=100% cellpadding=0 cellspacing=0 border=0><tbody><tr><td class=code-outline><pre class=displaycode>@Component
+public class CommandLineRunnerImpl implements CommandLineRunner {
+
+&nbsp; &nbsp; @Override
+&nbsp; &nbsp; public void run(String... args) throws Exception {
+&nbsp; &nbsp; &nbsp; &nbsp; System.out.println("In CommandLineRunnerImpl ");
+
+&nbsp; &nbsp; &nbsp; &nbsp; for (String arg : args) {
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; System.out.println(arg);
+&nbsp; &nbsp; &nbsp; &nbsp; }
+&nbsp; &nbsp; }
+}
+</pre></table><br>创建CommandLineRunner接口Bean的示例<br><p class=indent><table width=100% cellpadding=0 cellspacing=0 border=0><tbody><tr><td class=code-outline><pre class=displaycode>@SpringBootApplication
+public class Application {
+
+&nbsp; &nbsp; public static void main(String[] args) {
+&nbsp; &nbsp; &nbsp; &nbsp; SpringApplication.run(Application.class);
+&nbsp; &nbsp; }
+
+&nbsp; &nbsp; @Bean
+&nbsp; &nbsp; public CommandLineRunner CommandLineRunnerBean() {
+&nbsp; &nbsp; &nbsp; &nbsp; return (args) -&gt; {
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; System.out.println("In CommandLineRunnerImpl ");
+
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; for (String arg : args) {
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; System.out.println(arg);
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }
+&nbsp; &nbsp; &nbsp; &nbsp; };
+&nbsp; &nbsp; }
+}
+</pre></table><br>我们可以使用命令行或IDE运行应用程序。让我们举一个例子，当我们使用参数“ –status = running”运行应用程序时<br><br><p class=indent><table width=100% cellpadding=0 cellspacing=0 border=0><tbody><tr><td class=code-outline><pre class=displaycode>mvn spring-boot:run -Dspring-boot.run.arguments="--status=running"
+</pre></table><br>要么<br><br><p class=indent><table width=100% cellpadding=0 cellspacing=0 border=0><tbody><tr><td class=code-outline><pre class=displaycode>mvn package&nbsp;
+java -jar target/&lt;FILENAME.JAR HERE&gt; --status=running
+</pre></table><br>这将产生以下日志输出：<br><br><p class=indent><table width=100% cellpadding=0 cellspacing=0 border=0><tbody><tr><td class=code-outline><pre class=displaycode>In CommandLineRunnerImpl
+status=running
+</pre></table><br>如我们所见，该参数未解析，而是解释为单个值“ status = running”。<br><br>要访问已解析格式的命令行参数，我们需要使用ApplicationRunner接口。我们待会儿再看。<br><br>Spring Boot将CommandLineRunner接口添加到启动过程中。因此，在commandlinerRunner中引发异常将迫使Spring启动中止启动。<br><br>我们可以在一个应用程序中创建多个CommandLineRunner。使用Ordered接口或@Order批注，我们可以配置它们的运行顺序。较低的值表示较高的优先级。默认情况下，所有组件均以最低优先级创建。这就是为什么没有订单配置的组件将被最后调用的原因。<br><br>我们可以使用订单注释，如下所示<br><br><p class=indent><table width=100% cellpadding=0 cellspacing=0 border=0><tbody><tr><td class=code-outline><pre class=displaycode>@Component
+@Order(1)
+public class CommandLineRunnerImpl implements CommandLineRunner {
+&nbsp; &nbsp; ........
+}
+</pre></table><br>&nbsp;<br><p class=indent><b>2.ApplicationRunner接口</b><br>如前所述，要访问已解析的参数，我们需要使用ApplicationRunner接口。ApplicationRunner接口为运行方法提供ApplicationArguments而不是原始字符串数组。<br><br>ApplicationArguments是一个接口，可从org.springframework.boot软件包下的boot 1.3 srping中获得。<br><br>它提供了以下几种访问参数的方法<br><ul>
+<li>String[] GetSourceArgs()：&nbsp;&nbsp; &nbsp;提供传递给应用程序的未处理参数
+<li>Set&lt;String&gt; getOptionNames()&nbsp; ：&nbsp; 所有可选参数的名称，可选参数的前面都有“ - “如：-name =‘堆栈跟踪’
+<li>List &lt;String&gt; getNonOptionArgs()&nbsp; ：&nbsp; 返回未处理的非可选参数。不带“ — ”的参数
+<li>boolean&nbsp;containsOption（String name）：&nbsp; &nbsp; &nbsp;检查在可选参数中是否存在名称
+<li>List&lt;String&gt; getOptionValues（String name）：&nbsp; &nbsp; 通过名称给出参数值
+</ul><br><br>作为接口实现的应用程序运行器示例<br>让我们使用“ status = running –mood = happy 10 –20”参数运行以下程序，并了解输出<br><br><p class=indent><table width=100% cellpadding=0 cellspacing=0 border=0><tbody><tr><td class=code-outline><pre class=displaycode>@Component
+public class ApplicationRunnerImpl implements ApplicationRunner {
+
+&nbsp; &nbsp;@Override
+&nbsp; &nbsp;public void run(ApplicationArguments args) throws Exception {
+
+&nbsp; &nbsp; &nbsp; System.out.println("ApplicationRunnerImpl Called");
+
+//print all arguemnts: arg: status=running, arg: --mood=happy, 10, --20
+&nbsp; &nbsp; &nbsp; for (String arg : args.getSourceArgs()) {
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;System.out.println("arg: "+arg);
+&nbsp; &nbsp; &nbsp; }
+&nbsp; &nbsp; &nbsp; System.out.println("NonOptionArgs: "+args.getNonOptionArgs()); //[status=running,10]
+&nbsp; &nbsp; &nbsp; System.out.println("OptionNames: "+args.getOptionNames()); &nbsp;//[mood, 20]
+
+&nbsp; &nbsp; &nbsp;System.out.println("Printing key and value in loop:");
+&nbsp; &nbsp; &nbsp; for (String key : args.getOptionNames()) {
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;System.out.println("key: "+key); &nbsp; &nbsp; //key: mood &nbsp;//key: 20
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;System.out.println("val: "+args.getOptionValues(key)); //val:[happy] //val:[]
+&nbsp; &nbsp; &nbsp; }
+&nbsp; &nbsp;}
+}
+</pre></table><br>输出：<br><br><p class=indent><table width=100% cellpadding=0 cellspacing=0 border=0><tbody><tr><td class=code-outline><pre class=displaycode>ApplicationRunnerImpl Called
+arg: status=running
+arg: --mood=happ
+arg: 10
+arg: --20
+NonOptionArgs: [status=running , 10]
+OptionNames: [mood, 20]
+Printing key and value in loop:
+key: mood
+val: [happy]
+key: 20
+val: []
+</pre></table><br>CommandLineRunner和ApplicationRunner具有类似的功能，例如<br><br>run（）方法中的异常将中止应用程序启动&nbsp;<br>可以使用Ordered接口或@Order批注来订购多个ApplicationRunner<br>需要注意的最重要一点是，命令在CommandLineRunners和ApplicationRunners之间共享。这意味着可以在commandlinerRunner和applicationRunner之间混合执行顺序。<br>&nbsp;<br><p class=indent><b>3. Spring Boot中的应用程序事件</b><br>Spring框架在不同情况下触发不同事件。它还会在启动过程中触发许多事件。我们可以使用这些事件来执行代码，例如，在Spring Boot应用程序启动后，可以使用ApplicationReadyEvent执行代码。<br><br>如果我们不需要命令行参数，这是在应用程序启动后执行代码的最佳方法。<br><br><p class=indent><table width=100% cellpadding=0 cellspacing=0 border=0><tbody><tr><td class=code-outline><pre class=displaycode>@Component
+public class RunAfterStartup{
+
+@EventListener(ApplicationReadyEvent.class)
+public void runAfterStartup() {
+&nbsp; &nbsp; System.out.println("Yaaah, I am running........");
+}
+</pre></table><br>输出：<br><br>Yaaah, I am running........<br>最重要的事件是<br><ul>
+<li>ApplicationContextInitializedEvent ：在准备ApplicationContext并调用ApplicationContextInitializers之后但在加载bean定义之前触发
+<li>ApplicationPreparedEvent ：在加载bean定义后触发
+<li>ApplicationStartedEvent ：在刷新上下文之后但在调用命令行和应用程序运行程序之前触发
+<li>ApplicationReadyEvent ：在调用任何应用程序和命令行运行程序之后触发
+<li>ApplicationFailedEvent ：如果启动时发生异常则触发
+<li>可以创建多个ApplicationListeners。可以使用@Order批注或O​​rdered接口对其进行订购。
+</ul><br><br>该顺序与其他相同类型的ApplicationListener共享，但不与ApplicationRunners或CommandLineRunners共享。<br>&nbsp;<br><p class=indent><b>4.方法上的@Postconstruct注解</b><br>可以使用@PostConstruct批注标记方法。每当使用此注释标记方法时，将在依赖项注入后立即调用该方法。<br><br>@PostConstruct方法链接到特定的类，因此它仅应用于特定于类的代码。每个类只有一个带有postConstruct批注的方法。<br><br><p class=indent><table width=100% cellpadding=0 cellspacing=0 border=0><tbody><tr><td class=code-outline><pre class=displaycode>@Component
+public class PostContructImpl {
+
+&nbsp;&nbsp; &nbsp;public PostContructImpl() {
+&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;System.out.println("PostContructImpl Constructor called");
+&nbsp;&nbsp; &nbsp;}
+
+&nbsp;&nbsp; &nbsp;@PostConstruct
+&nbsp;&nbsp; &nbsp;public void runAfterObjectCreated() {
+&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;System.out.println("PostContruct method called");
+&nbsp;&nbsp; &nbsp;}
+
+}
+</pre></table><br>输出：<br><br><p class=indent><table width=100% cellpadding=0 cellspacing=0 border=0><tbody><tr><td class=code-outline><pre class=displaycode>PostContructImpl Constructor called
+postContruct method called
+</pre></table><br>需要注意的是，如果class被标记为lazy，则意味着在请求时创建了class。之后，将执行标有@postConstruct批注的方法。<br><br>标有postConstruct批注的方法可以具有任何名称，但是不能具有任何参数。它必须是无效的，并且不能是静态的。<br><br>请注意，@postConstruct批注是Java EE模块的一部分，在Java 9中被标记为已弃用，在Java 11中已被删除。我们仍然可以通过将java.se.ee添加到应用程序中来使用它。<br>&nbsp;<br><p class=indent><b>5. InitializingBean接口</b><br>InitializingBean解决方案的工作原理与postConstruct批注完全相似。不必使用注释，我们必须实现InitializingBean接口。然后，我们需要重写afterPropertiesSet（）方法。<br><br>InitializingBean是org.springframework.beans.factory包的一部分。<br><br><p class=indent><table width=100% cellpadding=0 cellspacing=0 border=0><tbody><tr><td class=code-outline><pre class=displaycode>@Component
+public class InitializingBeanImpl implements InitializingBean {
+&nbsp; &nbsp; public InitializingBeanImpl() {
+&nbsp; &nbsp; &nbsp; &nbsp; System.out.println("InitializingBeanImpl Constructor called");
+&nbsp; &nbsp; }
+&nbsp; &nbsp; @Override
+&nbsp; &nbsp; public void afterPropertiesSet() throws Exception {
+&nbsp; &nbsp; &nbsp; &nbsp; System.out.println("InitializingBeanImpl afterPropertiesSet method called");
+&nbsp; &nbsp; }
+}
+</pre></table><br>您必须考虑如果同时使用@PostConstruct批注和InitializingBean会发生什么。那么在这种情况下，@PostConstruct方法将在InitializingBean的afterPropertiesSet（）方法之前调用。<br>&nbsp;<br><p class=indent><b>6. @bean注释的init属性</b><br>我们可以在@Bean批注中使用initMethod属性提供一种方法。bean初始化后将调用此方法。<br><br>initMethod中提供的方法必须为空，并且不能包含任何参数。此方法甚至可以是私有的。<br><br><p class=indent><table width=100% cellpadding=0 cellspacing=0 border=0><tbody><tr><td class=code-outline><pre class=displaycode>public class BeanInitMethodImpl {
+&nbsp;
+&nbsp; &nbsp; public void runAfterObjectCreated() {
+&nbsp; &nbsp; &nbsp; &nbsp; System.out.println("yooooooooo......... someone called me");
+&nbsp; &nbsp; }
+}&nbsp;
+
+@SpringBootApplication
+public class DemoApplication {
+&nbsp; &nbsp; public static void main(String[] args) {
+&nbsp; &nbsp; &nbsp; &nbsp; SpringApplication.run(DemoApplication.class, args);
+&nbsp; &nbsp; }
+
+&nbsp; &nbsp; @Bean(initMethod="runAfterObjectCreated")
+&nbsp; &nbsp; public BeanInitMethodImpl getFunnyBean() {
+&nbsp; &nbsp; &nbsp; &nbsp; return new BeanInitMethodImpl();
+&nbsp; &nbsp; }
+&nbsp;}
+</pre></table><br>输出：<br><br><p class=indent><table width=100% cellpadding=0 cellspacing=0 border=0><tbody><tr><td class=code-outline><pre class=displaycode>yooooooooo......... someone called me
+</pre></table><br>如果您具有同一类的InitializingBean实现和@Bean批注的initMethod属性，则将InitializingBean的afterPropertiesSet方法称为initMethod。<br>&nbsp;<br>结合不同的方法：最后，有时我们可能需要组合多个选项。然后，它们将按照以下顺序执行：<br><ul>
+<li>Constructor
+<li>PostContruct&nbsp;method
+<li>afterPropertiesSet&nbsp;method
+<li>Bean&nbsp;init&nbsp;Method
+<li>ApplicationStartedEvent
+<li>ApplicationRunner&nbsp;Or&nbsp;CommandLineRunner&nbsp;depends on Order
+<li>ApplicationReadyEvent
+</ul><br><br>
+ <p></p>
+ </main>
+ </div> 
+ <p></p>
+ </div>
+ </div>
+ </div>
+</div>
+</div>
+</div>
+ 
+ </article> 
+ 
+ <div class="diggArea list-inline top-social">
+ <div class=diggNum id=digNumber_23154907>
+ 2</div>
+ <div class="diggLink top8" id=textArea_23154907><a><i class="fa fa-thumbs-o-up"></i></a>
+ </div> 
+ </div>
+ <div style="margin:0 auto;width:85px">
+ <ul class="list-inline top-social">
+ <li><a><i class="fa fa-weibo"></i></a></li>
+ <li><a><i class="fa fa-weixin"></i></a></li>
+ <li><a><i class="fa fa-qq"></i></a></li> 
+ </ul>
+ </div>
+ <div class=box>
+ 
+ </div>
+ </div>
+ <div id=pageEnd></div>
+ <div id=nextPageContent></div>
+ </div>
+ </div>
+ 
+ <div id=sidebar class=col-md-4>
+ 
+ <div class="widget wid-follow">
+ <div class=content>
+ <ul class=list-inline>
+ <form role=form class=form-horizontal method=post action=/query/threadViewQuery.shtml>
+ <input type=text placeholder=Search value name=query id=v_search class=form-control>
+ </form>
+ </ul>
+ </div>
+ </div>
+ <div class=widget>
+ <div class=content>
+ <div class="post wrap-vid">
+ <ul> 
+ <div class=widget_tag_cloud>
+ <div class=tagcloud>
+ <a href=https://www.jdon.com/tag-34038/ class=tag-cloud-link>SpringBoot框架</a>
+ &nbsp;&nbsp; 
+ </div>
+ </div>
+ </ul>
+ </div>
+ </div> 
+ </div>
+ 
+ 
+ <div class="widget wid-post">
+ <div class=content>
+ <div class="post wrap-vid">
+ <ul> 
+ <div id=threadTagList class=scrolldiv style=position:static><style class=sf-hidden>@media(min-width:992px){.limitWidth{width:330px}}</style>
+<div class=limitWidth>
+<div class=box>
+ <div class=linkblock> 
+ <div class=row> 
+ <div class=col-md-12>
+ <div class=wrap-vid>
+ <div class=widget> 
+ <div class=info>
+ <a href=https://www.jdon.com/53851.html target=_blank>
+ 用Spring组合自定义的注释 - mscharhag</a>
+ </div> 
+ <div class=info>
+ <a href=https://www.jdon.com/53842.html target=_blank>
+ 使用Spring Boot配置JNDI数据源 -Roy教程</a>
+ </div> 
+ <div class=info>
+ <a href=https://www.jdon.com/53822.html target=_blank>
+ 在Kubernetes上使用Spring Boot实现Hazelcast分布式缓存 – Piotr</a>
+ </div> 
+ <div class=info>
+ <a href=https://www.jdon.com/53811.html target=_blank>
+ 使用Jasypt在Spring Boot项目中加密配置文件中任何密码 - Aanchal Sharma</a>
+ </div> 
+ </div>
+ </div> 
+ </div>
+ </div> 
+ </div>
+ </div> 
+</div>
+</div> 
+ 
+ </ul>
+ </div>
+ </div>
+ </div>
+ </div>
+ </div> 
+</div>
+ <div id=reply style=display:none>
+ 
+ </div>
+ <footer>
+ <div class=wrap-footer>
+ <div class=container>
+ <div class=row>
+ <div class="col-md-4 col-footer footer-1">
+ <div class=footer-heading><h3><span style=color:#fff>Jdon.com</span></h3></div>
+ <div class=content>
+ <p>搬砖、铺道、搭桥</p>
+ </div>
+ </div>
+ <div class="col-md-4 col-footer footer-2">
+ 
+ </div>
+ <div class="col-md-4 col-footer footer-3">
+ <div class=content>
+ <ul>
+ <li><a href=https://www.jdon.com/followus.html>关注解道 </a></li>
+ <li><a href=https://www.jdon.com/aboutsite.htm>关于解道</a></li> 
+ </ul>
+ </div>
+ </div>
+ </div>
+ </div>
+ </div>
+ <div class=copy-right>
+ <p> <a href=https://beian.miit.gov.cn/ target=_blank>沪ICP备12033263号-1</a> 本系统软件来自<a href=https://github.com/banq/jivejdon>开源JiveJdon</a></p>
+ </div>
+ </footer>
+ 
+ 
+ <div id=to_top style="display:block;width:20px;height:20px;position:fixed;bottom:50px;right:40px;border-radius:10px 10px 10px 10px;text-decoration:none"><a href=# title=返回顶部><i class="fa fa-arrow-circle-up"></i></a></div>
+ 
+ 
+ 
+ 
