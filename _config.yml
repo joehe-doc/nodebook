@@ -22,7 +22,7 @@ github_username:  joehe-doc
 defaults:
   - scope:
       path: ""
-  - values:
+    values:
       layout: default
 
 # 生成子目录页面
