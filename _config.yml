@@ -27,8 +27,7 @@ defaults:
 
 # 生成子目录页面
 generate_categories: true
-include:
-  - _includes/generate_category_pages.html
+
 # Build settings
 markdown: kramdown
 #theme: minima
