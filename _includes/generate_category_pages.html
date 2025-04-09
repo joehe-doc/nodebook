@@ -1,0 +1,32 @@
+{% for dir in site.data.directories %}
+  {% assign dir_path = dir.name %}
+  {% assign dir_files = site.static_files | where_exp: "file", "file.path contains dir_path" %}
+  {% assign subdirs = dir_files | map: "path" | map: "split:" | map: "first" | uniq %}
+  {% assign files_in_dir = dir_files | where_exp: "file", "file.path == dir_path + '/' + file.path | split: '/' | last" %}
+
+  ---
+  layout: category
+  title: 子目录 {{ dir.name }}
+  category: {{ dir.name }}
+  ---
+
+  # 子目录 {{ dir.name }}
+
+  ## 子目录和文件
+
+  <ul>
+    {% for subdir in subdirs %}
+      {% unless subdir == dir_path %}
+        <li>
+          <a href="{{ subdir | relative_url }}">{{ subdir }}</a>
+        </li>
+      {% endunless %}
+    {% endfor %}
+
+    {% for file in files_in_dir %}
+      <li>
+        <a href="{{ file.path | relative_url }}">{{ file.path | split: '/' | last }}</a>
+      </li>
+    {% endfor %}
+  </ul>
+{% endfor %}
