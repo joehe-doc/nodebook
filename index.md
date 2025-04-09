@@ -38,7 +38,9 @@
           return false;
         };
       } else {
-        link.href = item.html_url;
+        // 使用 GitHub Pages 链接，而不是 GitHub 仓库链接
+        const pageUrl = `https://${owner}.github.io/${repo}/${path ? path + '/' : ''}${item.name}`;
+        link.href = pageUrl;
         link.target = "_blank";
       }
 
