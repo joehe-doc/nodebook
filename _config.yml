@@ -22,7 +22,7 @@ github_username:  joehe-doc
 
 # Build settings
 markdown: kramdown
-theme: minima
+#theme: minima
 #theme: jekyll-theme-cayman
 remote_theme: pages-themes/cayman@v0.2.0
 plugins:
