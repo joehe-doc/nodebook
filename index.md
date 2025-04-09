@@ -1,19 +1,50 @@
----
-layout: default
-title: Nodebook 文档主页
----
+<h2>📁 Nodebook 目录浏览器</h2>
+<div id="browser">加载中...</div>
 
-# 欢迎来到 Nodebook 文档
+<script>
+  const owner = "joehe-doc";
+  const repo = "nodebook";
+  const apiBase = `https://api.github.com/repos/${owner}/${repo}/contents`;
 
-以下是所有文档的顶级子目录链接：
+  async function loadDirectory(path = "") {
+    const res = await fetch(`${apiBase}/${path}`);
+    const data = await res.json();
 
-<ul>
-  {% assign directories = site.static_files | map: "path" | map: "split:" | map: "first" | uniq %}
-  {% for dir in directories %}
-    {% unless dir == '' %}
-      <li>
-        <a href="{{ dir | relative_url }}">{{ dir }}</a>
-      </li>
-    {% endunless %}
-  {% endfor %}
-</ul>
+    const browser = document.getElementById("browser");
+    browser.innerHTML = "";
+
+    if (path) {
+      const back = document.createElement("a");
+      back.href = "#";
+      back.innerText = "⬅️ 返回上级目录";
+      back.onclick = () => {
+        const parent = path.split("/").slice(0, -1).join("/");
+        loadDirectory(parent);
+        return false;
+      };
+      browser.appendChild(back);
+    }
+
+    data.forEach(item => {
+      const link = document.createElement("a");
+      link.href = "#";
+      link.innerText = item.name;
+      link.style.display = "block";
+      link.style.margin = "5px 0";
+
+      if (item.type === "dir") {
+        link.onclick = () => {
+          loadDirectory(path ? `${path}/${item.name}` : item.name);
+          return false;
+        };
+      } else {
+        link.href = item.html_url;
+        link.target = "_blank";
+      }
+
+      browser.appendChild(link);
+    });
+  }
+
+  loadDirectory();
+</script>
