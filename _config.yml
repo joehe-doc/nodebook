@@ -19,7 +19,8 @@ show_downloads: true
 baseurl: "/nodebook" # the subpath of your site, e.g. /blog
 url: "https://joehe-doc.github.io" # the base hostname & protocol for your site, e.g. http://example.com
 github_username:  joehe-doc
-
+include:
+  - _includes/generate_category_pages.html
 # Build settings
 markdown: kramdown
 #theme: minima
