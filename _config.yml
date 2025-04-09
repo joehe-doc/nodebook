@@ -19,14 +19,6 @@ show_downloads: true
 baseurl: "/nodebook" # the subpath of your site, e.g. /blog
 url: "https://joehe-doc.github.io" # the base hostname & protocol for your site, e.g. http://example.com
 github_username:  joehe-doc
-defaults:
-  - scope:
-      path: ""
-    values:
-      layout: default
-
-# 生成子目录页面
-generate_categories: true
 
 # Build settings
 markdown: kramdown
