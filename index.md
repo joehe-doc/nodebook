@@ -13,6 +13,7 @@
     const browser = document.getElementById("browser");
     browser.innerHTML = "";
 
+    // 返回上级
     if (path) {
       const back = document.createElement("a");
       back.href = "#";
@@ -25,20 +26,33 @@
       browser.appendChild(back);
     }
 
+    // 按类型和名称排序：目录在前，文件在后
+    data.sort((a, b) => {
+      if (a.type !== b.type) {
+        return a.type === "dir" ? -1 : 1;
+      }
+      return a.name.localeCompare(b.name);
+    });
+
+    // 显示每个文件/目录
     data.forEach(item => {
       const link = document.createElement("a");
-      link.href = "#";
-      link.innerText = item.name;
-      link.style.display = "block";
-      link.style.margin = "5px 0";
+      const isDir = item.type === "dir";
 
-      if (item.type === "dir") {
+      link.href = "#";
+      link.innerText = (isDir ? "📁 " : "📄 ") + item.name;
+      link.style.display = "block";
+      link.style.margin = "4px 0";
+      link.style.fontWeight = isDir ? "bold" : "normal";
+      link.style.color = isDir ? "#0366d6" : "#333";
+
+      if (isDir) {
         link.onclick = () => {
           loadDirectory(path ? `${path}/${item.name}` : item.name);
           return false;
         };
       } else {
-        // 使用 GitHub Pages 链接，而不是 GitHub 仓库链接
+        // 构造 GitHub Pages 链接
         const pageUrl = `https://${owner}.github.io/${repo}/${path ? path + '/' : ''}${item.name}`;
         link.href = pageUrl;
         link.target = "_blank";
@@ -50,3 +64,4 @@
 
   loadDirectory();
 </script>
+
