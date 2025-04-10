@@ -1,5 +1,12 @@
-<h2>📁 Nodebook 目录浏览器</h2>
-<div id="browser">加载中...</div>
+# Nodebook 浏览器
+
+> 点击文件名即可浏览 Markdown、HTML 或其他文件内容。
+
+<div id="browser">正在加载...</div>
+
+
+<!-- markdown 渲染库 -->
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 
 <script>
   const owner = "joehe-doc";
@@ -13,7 +20,7 @@
     const browser = document.getElementById("browser");
     browser.innerHTML = "";
 
-    // 返回上级
+    // 返回上级目录
     if (path) {
       const back = document.createElement("a");
       back.href = "#";
@@ -26,21 +33,20 @@
       browser.appendChild(back);
     }
 
-    // 按类型和名称排序：目录在前，文件在后
+    // 排序：目录在前，文件在后
     data.sort((a, b) => {
-      if (a.type !== b.type) {
-        return a.type === "dir" ? -1 : 1;
-      }
+      if (a.type !== b.type) return a.type === "dir" ? -1 : 1;
       return a.name.localeCompare(b.name);
     });
 
-    // 显示每个文件/目录
+    // 显示内容
     data.forEach(item => {
       const link = document.createElement("a");
       const isDir = item.type === "dir";
+      const isMarkdown = item.name.endsWith(".md");
 
       link.href = "#";
-      link.innerText = (isDir ? "📁 " : "📄 ") + item.name;
+      link.innerText = (isDir ? "📁 " : isMarkdown ? "📝 " : "📄 ") + item.name;
       link.style.display = "block";
       link.style.margin = "4px 0";
       link.style.fontWeight = isDir ? "bold" : "normal";
@@ -51,10 +57,21 @@
           loadDirectory(path ? `${path}/${item.name}` : item.name);
           return false;
         };
+      } else if (isMarkdown) {
+        link.onclick = async () => {
+          const filePath = path ? `${path}/${item.name}` : item.name;
+          const rawUrl = `https://raw.githubusercontent.com/${owner}/${repo}/main/${filePath}`;
+          const res = await fetch(rawUrl);
+          const md = await res.text();
+
+          const mdContainer = document.createElement("div");
+          mdContainer.innerHTML = marked.parse(md);
+          browser.innerHTML = `<a href="#" onclick="loadDirectory('${path}'); return false;">⬅️ 返回列表</a><hr>`;
+          browser.appendChild(mdContainer);
+        };
       } else {
-        // 构造 GitHub Pages 链接
-        const pageUrl = `https://${owner}.github.io/${repo}/${path ? path + '/' : ''}${item.name}`;
-        link.href = pageUrl;
+        const fileUrl = `https://${owner}.github.io/${repo}/${path ? path + '/' : ''}${item.name}`;
+        link.href = fileUrl;
         link.target = "_blank";
       }
 
@@ -64,4 +81,5 @@
 
   loadDirectory();
 </script>
+
 
