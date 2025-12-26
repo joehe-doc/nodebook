@@ -34,6 +34,32 @@
   #browser {
     flex: 1;
   }
+  /* 定义大数字列表 */
+  .custom-list {
+    list-style: none;
+    counter-reset: my-counter;
+    padding-left: 0;
+  }
+  .custom-list li {
+    counter-increment: my-counter;
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    border-bottom: 1px solid #eee;
+    transition: background 0.3s;
+  }
+  .custom-list li:hover {
+    background: #f9f9f9;
+  }
+  /* 生成醒目数字 */
+  .custom-list li::before {
+    content: counter(my-counter, decimal-leading-zero);
+    font-size: 24px;
+    font-weight: bold;
+    color: #159957; /* Cayman 主题的经典绿色 */
+    margin-right: 20px;
+    font-family: monospace;
+  }
 </style>
 
 <div id="container">
